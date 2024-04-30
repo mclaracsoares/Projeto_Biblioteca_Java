@@ -63,9 +63,9 @@ Este é um sistema de biblioteca desenvolvido em Java que permite o gerenciament
 ### Lista de Livros Emprestados
 ![image](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/133005094/a6d9bd9a-88f1-4d79-86a2-954ca3daf6a6)
 ### Atualizar Nome do Livro
-- Antes
+#### Antes:
 ![image](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/133005094/5df72e82-3da1-4c52-9bdb-8a1530d3dfcf)
-- Depois
+#### Depois:
 ![image](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/133005094/1bb1011b-adfa-432b-90df-749c0d09ebc5)
 ### Ver Avaliação dos Livros
 ![image](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/133005094/3fb74315-a701-4b3d-a148-395f377bdc41)
