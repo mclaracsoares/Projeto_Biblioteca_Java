@@ -31,7 +31,8 @@ Este é um sistema de biblioteca desenvolvido em Java que permite o gerenciament
 #### Cadastro:
 ![print aluno 1](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/142945811/2e452809-a6ff-46a7-90cd-13b7ad1b0f60)
 #### Login:
-![print aluno 2](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/142945811/69cbd1e8-1ea5-423d-9bc5-f80849a409d0)
+![image](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/133005094/628864b7-3abf-4646-81a7-8140d6a2f42d)
+
 ### Emprestimo de Livro:
 ![image](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/133005094/90bf039f-cd01-4bc1-b433-80a45f2a8625)
 ### Devolver Livro Emprestado
