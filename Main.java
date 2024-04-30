@@ -5,7 +5,6 @@ import java.util.Scanner;
 // Classe principal Main
 public class Main {
     // Declaração de variáveis estáticas para a biblioteca, o scanner e o usuário logado
-    public static Biblioteca biblioteca = new Biblioteca();
     public static Scanner scanner = new Scanner(System.in);
     public static Cliente usuarioLogado;
 
