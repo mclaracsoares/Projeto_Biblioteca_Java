@@ -2,6 +2,10 @@
 
 Este é um sistema de biblioteca desenvolvido em Java que permite o gerenciamento de livros, usuários (clientes e funcionários), empréstimos, categorias de livros e avaliações.
 
+## Autores
+- Maria Clara C Soares
+- Lucas Gurgel
+
 ## Funcionalidades Principais
 
 - **Login e Cadastro:** Os usuários podem fazer login como aluno ou funcionário, e também podem se cadastrar como aluno.
