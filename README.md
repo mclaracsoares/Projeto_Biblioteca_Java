@@ -24,4 +24,16 @@ Este é um sistema de biblioteca desenvolvido em Java que permite o gerenciament
 - **`Emprestimo`:** Classe que trata das operações de empréstimo e devolução de livros, incluindo a avaliação.
 - **`Utils`:** Classe utilitária para gerar IDs aleatórios.
 
+## Screenshots
+### Interface Aluno:
+#### Cadastro:
+![print aluno 1](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/142945811/2e452809-a6ff-46a7-90cd-13b7ad1b0f60)
+#### Login:
+![print aluno 2](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/142945811/69cbd1e8-1ea5-423d-9bc5-f80849a409d0)
+### Interface Funcionário:
+#### Cadastro:
+![print funcionario 2](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/142945811/c7abfb05-9a80-4f2c-951e-c4607e418bbe)
+#### Login:
+![print funcionario 1](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/142945811/2304a0bc-6b29-4da2-8e38-4e88c284e3c6)
+
 
