@@ -46,32 +46,7 @@ class Emprestimo implements Serializable {
    }
 
 
-   public static void imprimirHistoricoEmprestimos() {
-       System.out.println("\n=== Histórico de Empréstimos do Livro ===");
-       List<Emprestimo> historico = getHistoricoEmprestimos();
-       if (historico.isEmpty()) {
-           System.out.println("O livro ainda não foi emprestado.");
-           return;
-       }
-
-
-       for (Emprestimo emprestimo : historico) {
-           System.out.println("Data de Empréstimo: " + emprestimo.getDataEmprestimo());
-           System.out.println("Nome de usuario do aluno: " + emprestimo.getCliente().getNome());
-           System.out.println("ID do aluno: " + emprestimo.getCliente().getIdCliente());
-           if (emprestimo.getDataDevolucao() != null) {
-               System.out.println("Data de Devolução: " + emprestimo.getDataDevolucao());
-           } else {
-               System.out.println("Ainda não devolvido.");
-           }
-           if (emprestimo.getAvaliacao() >= 0) {
-               System.out.println("Avaliação do Aluno: " + emprestimo.getAvaliacao());
-           } else {
-               System.out.println("Livro ainda não avaliado pelo aluno.");
-           }
-           System.out.println();
-       }
-   }
+   
 
 
 

@@ -134,10 +134,9 @@ class Cliente extends Pessoa implements Serializable {
            System.out.println("2. Devolver livro");
            System.out.println("3. Lista de livros");
            System.out.println("4. Pesquisar livro por gênero");
-           System.out.println("5. Histórico de empréstimos");
-           System.out.println("6. Ver ID do aluno");
-           System.out.println("7. Livros mais bem avaliados");
-           System.out.println("8. Fazer Logout");
+           System.out.println("5. Ver ID do aluno");
+           System.out.println("6. Livros mais bem avaliados");
+           System.out.println("7. Fazer Logout");
            System.out.print("Escolha uma opção: ");
            opcao = Main.scanner.nextInt();
 
@@ -158,31 +157,14 @@ class Cliente extends Pessoa implements Serializable {
                case 4:
                    Categoria.pesquisarLivroPorCurso();
                    break;
+              
                case 5:
-                   System.out.println("\n===== Histórico =====");
-                   System.out.println("Escolha uma opção:");
-                   System.out.println("1. Histórico de empréstimos de livros");
-                   System.out.println("2. Histórico de leitura do usuário");
-                   System.out.print("Opção: ");
-                   int opcaoHistorico = Main.scanner.nextInt();
-                   switch (opcaoHistorico) {
-                       case 1:
-                           Emprestimo.imprimirHistoricoEmprestimos();
-                           break;
-                       case 2:
-                           Biblioteca.imprimirHistoricoLeitura();
-                           break;
-                       default:
-                           System.out.println("Opção inválida.");
-                   }
-                   break;
-               case 6:
                    System.out.println("Seu ID de usuário é: " + Main.usuarioLogado.getIdCliente());
                    break;
-               case 7:
+               case 6:
                    Livro.listarLivrosMaisBemAvaliados();
                    break;
-               case 8:
+               case 7:
                    Main.usuarioLogado = null; // Faz logout, limpando o usuário logado
                    System.out.println("Voltando ao menu inicial...");
                    break;
@@ -191,7 +173,7 @@ class Cliente extends Pessoa implements Serializable {
 
 
            }
-       } while (opcao != 8); // continua no loop
+       } while (opcao != 7); // continua no loop
 
 
        System.out.print("Digite 'easter' para um Easter Egg: ");

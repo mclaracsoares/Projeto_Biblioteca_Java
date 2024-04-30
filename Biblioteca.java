@@ -28,23 +28,7 @@ public class Biblioteca implements Serializable {
    }
 
 
-   public static void imprimirHistoricoLeitura() {
-       System.out.println("\n===== Histórico de Leitura do Usuário =====");
-       System.out.println("Livros lidos por " + Main.usuarioLogado.getNome() + ":");
-
-
-       if (Main.usuarioLogado.getLivrosEmprestados().isEmpty()) {
-           System.out.println("O usuário ainda não leu nenhum livro.");
-           return;
-       }
-       for (Livro livro : Main.usuarioLogado.getLivrosEmprestados()) {
-           System.out.println("Título: " + livro.getTitulo());
-           System.out.println("ID: " + livro.getIdLivro());
-           System.out.println("Gênero: " + livro.getCategoria().getNome());
-           System.out.println("Status: " + (livro.isDisponivel() ? "Disponível" : "Indisponível"));
-           System.out.println();
-       }
-   }
+   
    public static ArrayList<Livro> getListaLivros() {
        return listaLivros;
    }
