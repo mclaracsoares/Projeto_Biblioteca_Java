@@ -1,5 +1,6 @@
 // classe pessoa, cliente e funcionario:
 import java.util.ArrayList;
+import java.util.Comparator;
 
 class Pessoa {
     public String nome;
@@ -29,8 +30,11 @@ class Cliente extends Pessoa {
         this.livrosEmprestados = new ArrayList<>();
     }
 
-    public static void adicionarCliente(Cliente cliente) {
+    public static void adicionarCliente(String nome, String senha) {
+        int id = Utils.gerarIDAleatorio();
+        Cliente cliente = new Cliente(nome, senha, id);
         Biblioteca.getListaClientes().add(cliente);
+        System.out.println("Aluno adicionado com sucesso!");
     }
 
     public static void menuUsuario() {
@@ -113,7 +117,7 @@ class Cliente extends Pessoa {
 
         Cliente novoCliente = new Cliente(nome, senha, idUsuario);
 
-        adicionarCliente(novoCliente); // Adiciona o novo cliente à lista de clientes da biblioteca
+        Biblioteca.getListaClientes().add(novoCliente);
 
         System.out.println("│ Usuário cadastrado com sucesso! Seu ID é: " + idUsuario + "            ");
         System.out.println("╰─────────────────────────────────────────────────────────╯");
@@ -129,7 +133,7 @@ class Cliente extends Pessoa {
             System.out.println("│   3. Lista de livros                                                        │");
             System.out.println("│   4. Pesquisar livro por curso                                              │");
             System.out.println("│   5. Ver ID do aluno                                                        │");
-            System.out.println("│   6. Livros mais bem avaliados                                              │");
+            System.out.println("│   6. Ranking dos livros                                                     │");
             System.out.println("│   7. Fazer Logout                                                           │");
             System.out.println("│                                                                             │");
             System.out.println("╰─────────────────────────────────────────────────────────────────────────────╯");
@@ -145,12 +149,11 @@ class Cliente extends Pessoa {
                     Emprestimo.devolverLivro();
                     break;
                 case 3:
-                    System.out.println("\n╭──────────── Lista de Livros Disponíveis ────────────╮");
+                    System.out.println("\n──── Lista de Livros Disponíveis ────");
                     Biblioteca.imprimirListaLivros(true);
-                    System.out.println("╰────────────────────────────────────────────────────╯");
-                    System.out.println("\n╭────────── Lista de Livros Indisponíveis ───────────╮");
+                    System.out.println("\n──── Lista de Livros Indisponíveis ──── ");
                     Biblioteca.imprimirListaLivros(false); // Imprime apenas livros indisponíveis
-                    System.out.println("╰─────────────────────────────────────────────────────╯");
+
                     break;
                 case 4:
                     Categoria.pesquisarLivroPorCurso();
@@ -253,25 +256,25 @@ class Funcionario extends Pessoa {
                     Emprestimo.verLivrosEmprestados();
                     break;
                 case 5:
-                    System.out.println("\n╭───────────────────── Avaliar Livro ─────────────────────╮");
-                    System.out.print("│ Digite o ID do livro que deseja avaliar: ");
-
-                    int idLivroAvaliar = Main.scanner.nextInt();
-                    Livro livroAvaliar = Biblioteca.buscarLivroPorID(idLivroAvaliar);
-                    if (livroAvaliar != null) {
-                        System.out.print("│ Digite sua avaliação (de 1 a 5): ");
-                        double avaliacao = Main.scanner.nextDouble();
-                        if (avaliacao >= 1 && avaliacao <= 5) {
-                            livroAvaliar.avaliarLivro(avaliacao);
-                            System.out.println("│ Obrigado pela sua avaliação!                             │");
-                        } else {
-                            System.out.println("│ A avaliação deve estar entre 1 e 5.                        │");
+                    System.out.println("\n╭───────────────────── Avaliações dos Livros ───────────────────╮");
+                    ArrayList<Livro> livrosOrdenados = new ArrayList<>(Biblioteca.getListaLivros());
+                    livrosOrdenados.sort(Comparator.comparingDouble(Livro::getAvaliacao).reversed());
+                    int count = 1;
+                    for (Livro livro : livrosOrdenados) {
+                        if (livro.getAvaliacao() > 0) {
+                            System.out.println("│ " + count + ". Título: " + livro.getTitulo());
+                            System.out.println("│    Avaliação: " + livro.getAvaliacao()); // Aqui está a correção
+                            System.out.println("│    Autor: " + livro.getAutor());
+                            System.out.println("│    ID: " + livro.getIdLivro());
+                            System.out.println("│    Curso: " + livro.getCategoria().getNome());
+                            System.out.println("│");
+                            count++;
                         }
-                        System.out.println("╰───────────────────────────────────────────────────────────╯");
-                    } else {
-                        System.out.println("Livro não encontrado.");
                     }
-                    break;
+                    if (count == 1) {
+                        System.out.println("│ Nenhum livro foi avaliado ainda.");
+                    }
+                    System.out.println("╰────────────────────────────────────────────────────────────────────╯");
 
                 case 6:
                     System.out.println("Saindo");
