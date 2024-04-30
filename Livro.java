@@ -1,11 +1,9 @@
-// classe livro:
 // Classe Livro
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-class Livro implements Serializable {
+class Livro {
 
     private double avaliacao; // Avaliação média do livro
     private String titulo; // Título do livro
@@ -27,34 +25,39 @@ class Livro implements Serializable {
     }
 
     public static void listarLivrosMaisBemAvaliados() {
-        System.out.println("\n===== Livros Mais Bem Avaliados =====");
+        System.out.println("\n╭──────────────────── Ranking dos livros ────────────────────╮");
         ArrayList<Livro> livrosOrdenados = new ArrayList<>(Biblioteca.getListaLivros());
         livrosOrdenados.sort(Comparator.comparingDouble(Livro::getAvaliacao).reversed());
         int count = 1;
         for (Livro livro : livrosOrdenados) {
             if (livro.getAvaliacao() > 0) {
-                System.out.println(count + ". Título: " + livro.getTitulo());
-                System.out.println("   Avaliação: " + livro.avaliacao); // Aqui está a correção
-                System.out.println("   Autor: " + livro.getAutor());
-                System.out.println("   ID: " + livro.getIdLivro());
-                System.out.println("   Curso: " + livro.getCategoria().getNome());
+                System.out.println("│ " + count + ". Título: " + livro.getTitulo());
+                System.out.println("│    Avaliação: " + livro.avaliacao); // Aqui está a correção
+                System.out.println("│    Autor: " + livro.getAutor());
+                System.out.println("│    ID: " + livro.getIdLivro());
+                System.out.println("│    Curso: " + livro.getCategoria().getNome());
+                System.out.println("│");
                 count++;
             }
         }
         if (count == 1) {
-            System.out.println("Nenhum livro foi avaliado ainda.");
+            System.out.println("│ Nenhum livro foi avaliado ainda.");
         }
+        System.out.println("╰────────────────────────────────────────────────────────────────────╯");
     }
 
     public static void verAvaliacoesLivros() {
-        System.out.println("\n===== Avaliações dos Livros =====");
+        System.out.println("\n╭─────────────────────── Avaliações dos Livros ───────────────────────╮");
         for (Livro livro : Biblioteca.getListaLivros()) {
             if (livro.getAvaliacao() != 0) {
-                System.out.println("Livro: " + livro.getTitulo());
-                System.out.println("Avaliação: " + livro.getAvaliacao());
+                System.out.println("│ Livro: " + livro.getTitulo());
+                System.out.println("│ Avaliação: " + livro.getAvaliacao());
+                System.out.println("│");
             }
         }
+        System.out.println("╰────────────────────────────────────────────────────────────────────╯");
     }
+
     public static void cadastrarLivro() {
         System.out.println("\n╭─────────────────────── Cadastro de Livro ───────────────────────╮");
         Main.scanner.nextLine(); // buffer - quebra de linha
@@ -157,7 +160,7 @@ class Livro implements Serializable {
         System.out.println("╰──────────────────────────────────────────────────────────────╯");
     }
 
-    public void setAvaliacao(float avaliacao) {
+    public void setAvaliacao(double avaliacao) {
         this.avaliacao = avaliacao;
     }
     public double getAvaliacao() {
