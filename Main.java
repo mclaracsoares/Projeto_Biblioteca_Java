@@ -10,6 +10,10 @@ public class Main {
 
     // Método principal main
     public static void main(String[] args) {
+        // add os caras
+        Biblioteca.getListaClientes().add(new Cliente("clark", "quente", Utils.gerarIDAleatorio()));
+        Biblioteca.getListaClientes().add(new Cliente("lucas", "123", Utils.gerarIDAleatorio()));
+
         // Chama o método menuInicial para exibir o menu inicial
         menuInicial();
     }
@@ -55,3 +59,4 @@ public class Main {
         } while (opcao != 3); // Continua o loop até que a opção escolhida seja 3 (Sair)
     }
 }
+
