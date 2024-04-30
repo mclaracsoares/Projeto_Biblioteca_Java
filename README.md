@@ -5,7 +5,7 @@ Este é um sistema de biblioteca desenvolvido em Java que permite o gerenciament
 ## Funcionalidades Principais
 
 - **Login e Cadastro:** Os usuários podem fazer login como aluno ou funcionário, e também podem se cadastrar como aluno.
-- **Empréstimo e Devolução de Livros:** Os alunos podem emprestar livros disponíveis e devolvê-los após a leitura. O sistema registra o histórico de empréstimos.
+- **Empréstimo e Devolução de Livros:** Os alunos podem emprestar livros disponíveis e devolvê-los após a leitura.
 - **Pesquisa de Livros:** Os usuários podem pesquisar livros por curso (categoria) e ver uma lista de livros disponíveis e indisponíveis para empréstimos.
 - **Avaliação de Livros:** Os alunos podem avaliar os livros após a devolução, fornecendo uma classificação de 0 a 5.
 - **Gerenciamento de Livros:** Os funcionários podem adicionar, remover e atualizar informações de livros, como título, autor e categoria.
