@@ -45,17 +45,17 @@ class Emprestimo  {
             if (!livro.isDisponivel()) { // Verifica se o livro está emprestado
                 livro.setDisponivel(true); // Marca o livro como disponível novamente
                 Main.usuarioLogado.getLivrosEmprestados().remove(livro); // Remove o livro dos empréstimos do usuário
-                System.out.println("│ Livro devolvido com sucesso!                                    │");
+                System.out.println("│ Livro devolvido com sucesso!                                    ");
 
                 // Perguntar ao usuário se deseja avaliar o livro
-                System.out.print("│ Deseja avaliar este livro? (S/N): ");
+                System.out.print("│ Deseja avaliar este livro? ");
                 char resposta = Main.scanner.next().toLowerCase().charAt(0);
                 if (resposta == 's') {
                     System.out.print("│ De 0 a 5, Qual sua avaliação para esse livro? ");
-                    float avaliacao = Main.scanner.nextFloat();
+                    double avaliacao = Main.scanner.nextDouble();
                     while (avaliacao < 0 || avaliacao > 5) {
                         System.out.print("│ Insira uma avaliação válida entre 0 e 5: ");
-                        avaliacao = Main.scanner.nextFloat();
+                        avaliacao = Main.scanner.nextDouble();
                     }
                     livro.setAvaliacao(avaliacao);
                     System.out.println("│ Obrigado pela avaliação!                                         │");
@@ -66,10 +66,11 @@ class Emprestimo  {
                 System.out.println("│ Este livro atualmente ainda está disponível.                     │");
             }
         } else {
-            System.out.println("│ Livro não encontrado.                                             │");
+            System.out.println("│ Livro não encontrado.                                            ");
         }
-        System.out.println("╰───────────────────────────────────────────────────────────────────╯");
+        System.out.println("╰────────────────────────────────────────────────────────────────╯");
     }
+
 
     public static void emprestarLivro() {
         if (Biblioteca.getListaLivros().isEmpty()) {
@@ -89,13 +90,13 @@ class Emprestimo  {
                 Date dataEmprestimo = new Date(); // Data atual
                 Emprestimo emprestimo = new Emprestimo(dataEmprestimo, Main.usuarioLogado);
                 getHistoricoEmprestimos().add(emprestimo); // Adiciona o empréstimo ao histórico do livro
-                System.out.println("│ Livro emprestado com sucesso!                                   │");
+                System.out.println("│ Livro emprestado com sucesso! ");
             } else {
-                System.out.println("│ Este livro atualmente não está disponível para empréstimo.     │");
+                System.out.println("│ Este livro atualmente não está disponível para empréstimo.     ");
             }
         } else {
-            System.out.println("│ Livro não encontrado.                                            │");
+            System.out.println("│ Livro não encontrado.                                           ");
         }
-        System.out.println("╰───────────────────────────────────────────────────────────────────╯");
+        System.out.println("╰───────────────────────────────────────────────────────────────╯");
     }
 }
