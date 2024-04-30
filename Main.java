@@ -58,4 +58,6 @@ public class Main {
             }
         } while (opcao != 3); // Continua o loop até que a opção escolhida seja 3 (Sair)
     }
+    System.out.println("oi");
 }
+
