@@ -3,8 +3,8 @@
 import java.util.ArrayList;
 
 public class Biblioteca {
-    private static ArrayList<Livro> listaLivros = null;
-    private static ArrayList<Cliente> listaClientes = null;
+    private static ArrayList<Livro> listaLivros = new ArrayList<>();;
+    private static ArrayList<Cliente> listaClientes = new ArrayList<>();
 
     public Biblioteca() {
         listaLivros = new ArrayList<>();
@@ -23,7 +23,7 @@ public class Biblioteca {
                 System.out.println("│"); // Linha em branco entre cada livro
             }
         }
-        System.out.println("╰─────────────────────────────────────────────────────────────────╯");
+        System.out.println("╰──────────────────────────────────────────────────────────────╯");
     }
     // Método getter para obter a lista de livros
     public static ArrayList<Livro> getListaLivros() {
