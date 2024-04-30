@@ -25,6 +25,9 @@ Este é um sistema de biblioteca desenvolvido em Java que permite o gerenciament
 - **`Utils`:** Classe utilitária para gerar IDs aleatórios.
 
 ## Screenshots
+### Menu Inicial:
+![image](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/133005094/a050d7a0-6533-4e6c-ad38-49bbae4e9b11)
+
 ### Interface Aluno:
 #### Cadastro:
 ![print aluno 1](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/142945811/2e452809-a6ff-46a7-90cd-13b7ad1b0f60)
