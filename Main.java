@@ -8,6 +8,9 @@ public class Main {
    public static Cliente usuarioLogado;
 
 
+   public static void main(String[] args) {
+    menuInicial();
+    }
 
 
 
