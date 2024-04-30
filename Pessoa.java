@@ -1,311 +1,329 @@
-import java.io.Serializable;
+// classe pessoa, cliente e funcionario:
 import java.util.ArrayList;
 
+class Pessoa {
+    public String nome;
+    private static ArrayList<Pessoa> listaPessoas = new ArrayList<>();
 
-class Pessoa implements Serializable {
-   public String nome;
-
-
-public Pessoa(String nome) {
-   this.nome = nome;
+    public Pessoa(String nome) {
+        this.nome = nome;
+        listaPessoas.add(this); // Adiciona a pessoa à lista ao ser criada
+    }
+    public static ArrayList<Pessoa> getListaPessoas() {
+        return listaPessoas;
+    }
+    public String getNome() {
+        return nome;
+    }
 }
 
+class Cliente extends Pessoa {
+    private final int idCliente;
+    private final String senha;
+    private final ArrayList<Livro> livrosEmprestados;
+
+    public Cliente(String nome, String senha, int idCliente) {
+        super(nome);
+        this.senha = senha;
+        this.idCliente = idCliente;
+        this.livrosEmprestados = new ArrayList<>();
+    }
+
+    public static void adicionarCliente(Cliente cliente) {
+        Biblioteca.getListaClientes().add(cliente);
+    }
+
+    public static void menuUsuario() {
+        System.out.println("\n╭─────────────────────── Menu Aluno ────────────────────────╮");
+        System.out.println("│                                                           │");
+        System.out.println("│   ╭───────────────────────────────────────────────────╮   │");
+        System.out.println("│   │                   Opções:                         │   │");
+        System.out.println("│   │                                                   │   │");
+        System.out.println("│   │   1. Fazer login                                  │   │");
+        System.out.println("│   │   2. Cadastrar                                    │   │");
+        System.out.println("│   │   3. Voltar                                       │   │");
+        System.out.println("│   │                                                   │   │");
+        System.out.println("│   ╰───────────────────────────────────────────────────╯   │");
+        System.out.println("│                                                           │");
+        System.out.println("╰───────────────────────────────────────────────────────────╯");
+        System.out.print("Escolha uma opção: ");
+        int opcao = Main.scanner.nextInt();
+
+        switch (opcao) {
+            case 1:
+                fazerLoginUsuario();
+                break;
+            case 2:
+                cadastrarUsuario();
+                break;
+            case 3:
+                System.out.println("Voltando ao menu inicial...");
+                break;
+            default:
+                System.out.println("Opção inválida. Escolha novamente.");
+        }
+    }
+
+    public static void fazerLoginUsuario() {
+        System.out.println("\n╭─────────────────────── Login de Aluno ───────────────────╮");
+        System.out.print("│ Nome de usuário: ");
+        String nomeUsuario = Main.scanner.next().toLowerCase();
+        System.out.print("│ Senha: ");
+        String senha = Main.scanner.next();
+        System.out.println("╰──────────────────────────────────────────────────────────╯");
 
 
+        // Verificar o login de usuário
+        Main.usuarioLogado = verificarLoginUsuario(nomeUsuario, senha);
+        if (Main.usuarioLogado != null) {
+            menuOperacoesUsuario();
+        } else {
+            System.out.println("Usuário ou senha incorretos. Tente novamente.");
+        }
+    }
 
-   public String getNome() {
-       return nome;
-   }
-}
-class Cliente extends Pessoa implements Serializable {
-   private final int idCliente;
-   private final String senha;
-   private final ArrayList<Livro> livrosEmprestados;
+    public static Cliente verificarLoginUsuario(String nomeUsuario, String senha) {
+        String nomeUsuarioLower = nomeUsuario.toLowerCase(); // Converter para minúsculas
+        for (Cliente cliente : Biblioteca.getListaClientes()) {
+            if (cliente.getNome().toLowerCase().equals(nomeUsuarioLower) && cliente.verificarSenha(senha)) {
+                return cliente;
+            }
+        }
+        return null;
+    }
 
+    public static void cadastrarUsuario() {
+        System.out.println("\n╭───────────────────── Cadastro do Aluno ─────────────────╮");
+        System.out.print("│ Nome de usuário: ");
+        String nome = Main.scanner.next();
 
-   public Cliente(String nome, String senha, int idCliente) {
-       super(nome);
-       this.senha = senha;
-       this.idCliente = idCliente;
-       this.livrosEmprestados = new ArrayList<>();
-   }
+        // Verifica se o nome de usuário já existe (sem diferenciar maiúsculas e minúsculas)
+        for (Cliente cliente : Biblioteca.getListaClientes()) {
+            if (cliente.getNome().equalsIgnoreCase(nome)) {
+                System.out.println("│ Este nome de usuário já está em uso. Escolha outro.    ");
+                System.out.println("╰─────────────────────────────────────────────────────────╯");
+                return; // Retorna ao menu
+            }
+        }
+        System.out.print("│ Senha: ");
+        String senha = Main.scanner.next();
 
+        // ID único para o novo usuário
+        int idUsuario = Utils.gerarIDAleatorio();
 
-   public static void adicionarCliente(Cliente cliente) {
-       Biblioteca.getListaClientes().add(cliente);
-   }
+        Cliente novoCliente = new Cliente(nome, senha, idUsuario);
 
+        adicionarCliente(novoCliente); // Adiciona o novo cliente à lista de clientes da biblioteca
 
-   public static void menuUsuario() {
-       System.out.println("\n===== Menu Aluno =====");
-       System.out.println("1. Fazer login");
-       System.out.println("2. Cadastrar");
-       System.out.println("3. Voltar");
-       System.out.print("Escolha uma opção: ");
+        System.out.println("│ Usuário cadastrado com sucesso! Seu ID é: " + idUsuario + "            ");
+        System.out.println("╰─────────────────────────────────────────────────────────╯");
+    }
 
+    public static void menuOperacoesUsuario() {
+        int opcao;
+        do {
+            System.out.println("\n╭────────────────────────── Menu de Opções do Aluno ──────────────────────────╮");
+            System.out.println("│                                                                             │");
+            System.out.println("│   1. Emprestimo de livro                                                    │");
+            System.out.println("│   2. Devolver livro                                                         │");
+            System.out.println("│   3. Lista de livros                                                        │");
+            System.out.println("│   4. Pesquisar livro por curso                                              │");
+            System.out.println("│   5. Ver ID do aluno                                                        │");
+            System.out.println("│   6. Livros mais bem avaliados                                              │");
+            System.out.println("│   7. Fazer Logout                                                           │");
+            System.out.println("│                                                                             │");
+            System.out.println("╰─────────────────────────────────────────────────────────────────────────────╯");
+            System.out.print("Escolha uma opção: ");
 
-       int opcao = Main.scanner.nextInt();
+            opcao = Main.scanner.nextInt();
 
+            switch (opcao) {
+                case 1:
+                    Emprestimo.emprestarLivro();
+                    break;
+                case 2:
+                    Emprestimo.devolverLivro();
+                    break;
+                case 3:
+                    System.out.println("\n╭──────────── Lista de Livros Disponíveis ────────────╮");
+                    Biblioteca.imprimirListaLivros(true);
+                    System.out.println("╰────────────────────────────────────────────────────╯");
+                    System.out.println("\n╭────────── Lista de Livros Indisponíveis ───────────╮");
+                    Biblioteca.imprimirListaLivros(false); // Imprime apenas livros indisponíveis
+                    System.out.println("╰─────────────────────────────────────────────────────╯");
+                    break;
+                case 4:
+                    Categoria.pesquisarLivroPorCurso();
+                    break;
+                case 5:
+                    System.out.println("╭────────────────────────────────────────────────────╮");
+                    System.out.println("│ Seu ID de usuário é: " + Main.usuarioLogado.getIdCliente() + "                                │");
+                    System.out.println("╰────────────────────────────────────────────────────╯");
+                    break;
+                case 6:
+                    Livro.listarLivrosMaisBemAvaliados();
+                    break;
+                case 7:
+                    Main.usuarioLogado = null; // Faz logout, limpando o usuário logado
+                    System.out.println("╭────────────────────────────────────────────────────╮");
+                    System.out.println("│             Voltando ao menu inicial...            │");
+                    System.out.println("╰────────────────────────────────────────────────────╯");
+                    break;
+                default:
+                    System.out.println("╭────────────────────────────────────────────────────╮");
+                    System.out.println("│    Opção inválida. Por favor, escolha novamente.   │");
+                    System.out.println("╰────────────────────────────────────────────────────╯");
 
-       switch (opcao) {
-           case 1:
-               fazerLoginUsuario();
-               break;
-           case 2:
-               cadastrarUsuario();
-               break;
-           case 3:
-               System.out.println("Voltando ao menu inicial...");
-               break;
-           default:
-               System.out.println("Opção inválida. Escolha novamente.");
-       }
-   }
+            }
+        } while (opcao != 7); // continua no loop
 
+        System.out.println("╭────────────────────────────────────────────────────╮");
+        System.out.println("│ Digite 'easter' para um Easter Egg:                │");
+        System.out.println("╰────────────────────────────────────────────────────╯");
 
-   public static void fazerLoginUsuario() {
-       System.out.println("\n===== Login de Aluno =====");
-       System.out.print("Nome de usuário: ");
-       String nomeUsuario = Main.scanner.next().toLowerCase();
-       System.out.print("Senha: ");
-       String senha = Main.scanner.next();
+        String easterInput = Main.scanner.next().toLowerCase();
+        if (easterInput.equals("easter")) {
+            ativarEasterEgg();
+        }
+    }
 
+    private static void ativarEasterEgg() {
+        System.out.println("╭────────────────────────────────────────────────────╮");
+        System.out.println("│ Surpresa! Você encontrou o Easter Egg!             │");
+        System.out.println("│ Parabéns! Aqui está uma piada para você:           │");
+        System.out.println("│                                                    │");
+        System.out.println("│ Por que o programador foi preso durante as férias? │");
+        System.out.println("│ Porque ele deletou todos os seus cookies!          │");
+        System.out.println("╰────────────────────────────────────────────────────╯");
 
-       // Verificar o login de usuário
-       Main.usuarioLogado = verificarLoginUsuario(nomeUsuario, senha);
-       if (Main.usuarioLogado != null) {
-           menuOperacoesUsuario();
-       } else {
-           System.out.println("Usuário ou senha incorretos. Tente novamente.");
-       }
-   }
+    }
 
+    public int getIdCliente() {
+        return idCliente;
+    }
 
-   public static Cliente verificarLoginUsuario(String nomeUsuario, String senha) {
-       String nomeUsuarioLower = nomeUsuario.toLowerCase(); // Converter para minúsculas
-       for (Cliente cliente : Biblioteca.getListaClientes()) {
-           if (cliente.getNome().toLowerCase().equals(nomeUsuarioLower) && cliente.verificarSenha(senha)) {
-               return cliente;
-           }
-       }
-       return null;
-   }
+    public ArrayList<Livro> getLivrosEmprestados() {
+        return livrosEmprestados;
+    }
 
-
-
-
-   public static void cadastrarUsuario() {
-       System.out.println("\n===== Cadastro do Aluno =====");
-       System.out.print("Nome de usuário: ");
-       String nome = Main.scanner.next();
-
-
-       // Verifica se o nome de usuário já existe (sem diferenciar maiúsculas e minúsculas)
-       for (Cliente cliente : Biblioteca.getListaClientes()) {
-           if (cliente.getNome().equalsIgnoreCase(nome)) {
-               System.out.println("Este nome de usuário já está em uso. Escolha outro.");
-               return; // Retorna ao menu
-           }
-       }
-       System.out.print("Senha: ");
-       String senha = Main.scanner.next();
-
-
-       // ID único para o novo usuário
-       int idUsuario = Utils.gerarIDAleatorio();
-
-
-       Cliente novoCliente = new Cliente(nome, senha, idUsuario);
-
-
-       adicionarCliente(novoCliente); // Adiciona o novo cliente à lista de clientes da biblioteca
-
-
-       System.out.println("Usuário cadastrado com sucesso! Seu ID é: " + idUsuario);
-   }
-
-
-   public static void menuOperacoesUsuario() {
-       int opcao;
-       // Loop principal do menu de operações do usuário
-       do {
-           System.out.println("\n===== Menu de Opções do Aluno =====");
-           System.out.println("1. Emprestimo de livro");
-           System.out.println("2. Devolver livro");
-           System.out.println("3. Lista de livros");
-           System.out.println("4. Pesquisar livro por gênero");
-           System.out.println("5. Ver ID do aluno");
-           System.out.println("6. Livros mais bem avaliados");
-           System.out.println("7. Fazer Logout");
-           System.out.print("Escolha uma opção: ");
-           opcao = Main.scanner.nextInt();
-
-
-           switch (opcao) {
-               case 1:
-                   Emprestimo.emprestarLivro();
-                   break;
-               case 2:
-                   Emprestimo.devolverLivro();
-                   break;
-               case 3:
-                   System.out.println("\n=== Lista de Livros Disponíveis ===");
-                   Biblioteca.imprimirListaLivros(true); // imprime apenas livros disponíveis
-                   System.out.println("\n=== Lista de Livros Indisponíveis ===");
-                   Biblioteca.imprimirListaLivros(false); // Imprime apenas livros indisponíveis
-                   break;
-               case 4:
-                   Categoria.pesquisarLivroPorCurso();
-                   break;
-              
-               case 5:
-                   System.out.println("Seu ID de usuário é: " + Main.usuarioLogado.getIdCliente());
-                   break;
-               case 6:
-                   Livro.listarLivrosMaisBemAvaliados();
-                   break;
-               case 7:
-                   Main.usuarioLogado = null; // Faz logout, limpando o usuário logado
-                   System.out.println("Voltando ao menu inicial...");
-                   break;
-               default:
-                   System.out.println("Opção inválida. Por favor, escolha novamente.");
-
-
-           }
-       } while (opcao != 7); // continua no loop
-
-
-       System.out.print("Digite 'easter' para um Easter Egg: ");
-       String easterInput = Main.scanner.next().toLowerCase();
-       if (easterInput.equals("easter")) {
-           ativarEasterEgg();
-       }
-   }
-
-
-
-
-   private static void ativarEasterEgg() {
-       System.out.println("Surpresa! Você encontrou o Easter Egg!");
-       System.out.println("Parabéns! Aqui está uma piada para você:");
-       System.out.println("Por que o programador foi preso durante as férias?");
-       System.out.println("Porque ele deletou todos os seus cookies!");
-       // Você pode adicionar mais interações especiais aqui
-   }
-
-
-   public int getIdCliente() {
-       return idCliente;
-   }
-
-
-   public ArrayList<Livro> getLivrosEmprestados() {
-       return livrosEmprestados;
-   }
-
-
-   public boolean verificarSenha(String senha) {
-       return this.senha.equals(senha);
-   }
+    public boolean verificarSenha(String senha) {
+        return this.senha.equals(senha);
+    }
 }
 
+class Funcionario extends Pessoa {
+    public Funcionario(String nome) {
+        super(nome);
+    }
 
+    public static void cadastrarFuncionario() {
+        System.out.println("╭────────────────────────────────────────────────────╮");
+        System.out.println("│ Favor entrar em contato diretamente com a direção. │");
+        System.out.println("╰────────────────────────────────────────────────────╯");
 
+    }
 
-class Funcionario extends Pessoa implements Serializable {
-   public Funcionario(String nome) {
-       super(nome);
-   }
+    public static void menuOperacoesFuncionario() {
+        int opcao;
+        do {
+            System.out.println("\n╭────────────────────── Menu de Operações do Funcionário ─────────────────────╮");
+            System.out.println("│                                                                             │");
+            System.out.println("│   1. Adicionar Livro                                                        │");
+            System.out.println("│   2. Remover Livro                                                          │");
+            System.out.println("│   3. Atualizar Nome do Livro                                                │");
+            System.out.println("│   4. Ver Livros Emprestados                                                 │");
+            System.out.println("│   5. Ver Avaliações dos Livros                                              │");
+            System.out.println("│   6. Fazer Logout                                                           │");
+            System.out.println("│                                                                             │");
+            System.out.println("╰─────────────────────────────────────────────────────────────────────────────╯");
+            System.out.print("Escolha uma opção: ");
+            opcao = Main.scanner.nextInt();
 
+            switch (opcao) {
+                case 1:
+                    Livro.cadastrarLivro();
+                    break;
+                case 2:
+                    Livro.removerLivro();
+                    break;
+                case 3:
+                    Livro.atualizarLivro();
+                    break;
+                case 4:
+                    Emprestimo.verLivrosEmprestados();
+                    break;
+                case 5:
+                    System.out.println("\n╭───────────────────── Avaliar Livro ─────────────────────╮");
+                    System.out.print("│ Digite o ID do livro que deseja avaliar: ");
 
-   public static void cadastrarFuncionario() {
-       System.out.println("Favor entrar em contato diretamente com a direção.");
-   }
+                    int idLivroAvaliar = Main.scanner.nextInt();
+                    Livro livroAvaliar = Biblioteca.buscarLivroPorID(idLivroAvaliar);
+                    if (livroAvaliar != null) {
+                        System.out.print("│ Digite sua avaliação (de 1 a 5): ");
+                        double avaliacao = Main.scanner.nextDouble();
+                        if (avaliacao >= 1 && avaliacao <= 5) {
+                            livroAvaliar.avaliarLivro(avaliacao);
+                            System.out.println("│ Obrigado pela sua avaliação!                             │");
+                        } else {
+                            System.out.println("│ A avaliação deve estar entre 1 e 5.                        │");
+                        }
+                        System.out.println("╰───────────────────────────────────────────────────────────╯");
+                    } else {
+                        System.out.println("Livro não encontrado.");
+                    }
+                    break;
 
+                case 6:
+                    System.out.println("Saindo");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Escolha novamente.");
+            }
+        } while (opcao != 6);
+    }
 
-   public static void menuOperacoesFuncionario() {
-       int opcao;
-       do {
-           System.out.println("\n===== Menu de Operações do Funcionário =====");
-           System.out.println("1. Adicionar Livro");
-           System.out.println("2. Remover Livro");
-           System.out.println("3. Atualizar Nome do Livro");
-           System.out.println("4. Ver Livros Emprestados");
-           System.out.println("5. Ver Avaliações dos Livros");
-           System.out.println("6. Fazer Logout");
-           System.out.print("Escolha uma opção: ");
-           opcao = Main.scanner.nextInt();
+    public static void menuFuncionario() {
+        System.out.println("\n╭─────────────────────── Menu Funcionário ─────────────────────╮");
+        System.out.println("│                                                              │");
+        System.out.println("│   1. Fazer login                                             │");
+        System.out.println("│   2. Cadastrar                                               │");
+        System.out.println("│   3. Voltar                                                  │");
+        System.out.println("│                                                              │");
+        System.out.println("╰──────────────────────────────────────────────────────────────╯");
+        System.out.print("Escolha uma opção: ");
 
+        int opcao = Main.scanner.nextInt();
+        switch (opcao) {
+            case 1:
+                fazerLoginFuncionario();
+                break;
+            case 2:
+                Funcionario.cadastrarFuncionario();
+                break;
+            case 3:
+                System.out.println("╭────────────────────────────────────────────────────────────╮");
+                System.out.println("│                 Voltando ao menu inicial...                │");
+                System.out.println("╰────────────────────────────────────────────────────────────╯");
+                break;
+            default:
+                System.out.println("╭────────────────────────────────────────────────────────────╮");
+                System.out.println("│ Opção inválida. Por favor, escolha novamente.              │");
+                System.out.println("╰────────────────────────────────────────────────────────────╯");
+        }
+    }
 
+    public static void fazerLoginFuncionario() {
+        System.out.println("\n╭─────────────────────── Login de Funcionário ─────────────────────╮");
+        System.out.print("│ Senha: ");
+        String senha = Main.scanner.next();
 
+        if (senha.equals("UNICAP2024")) {
+            System.out.println("│ Login de funcionário bem-sucedido!                               ");
+            Funcionario.menuOperacoesFuncionario();
+            System.out.println("╰───────────────────────────────────────────────────────────────────╯");
+        } else {
+            System.out.println("│ Senha incorreta. Tente novamente.                                │");
+        }
 
-           switch (opcao) {
-               case 1:
-                   Livro.cadastrarLivro();
-                   break;
-               case 2:
-                   Livro.removerLivro();
-                   break;
-               case 3:
-                   Livro.atualizarLivro();
-                   break;
-               case 4:
-                   Emprestimo.verLivrosEmprestados();
-                   break;
-               case 5:
-                   Livro.verAvaliacoesLivros();
-                   break;
-               case 6:
-                   System.out.println("Saindo");
-                   break;
-               default:
-                   System.out.println("Opção inválida. Escolha novamente.");
-           }
-       } while (opcao != 6);
-   }
-
-
-
-
-   public static void menuFuncionario() {
-       System.out.println("\n===== Menu Funcionário =====");
-       System.out.println("1. Fazer login");
-       System.out.println("2. Cadastrar");
-       System.out.println("3. Voltar");
-       System.out.print("Escolha uma opção: ");
-       int opcao = Main.scanner.nextInt();
-
-
-
-
-       switch (opcao) {
-           case 1:
-               fazerLoginFuncionario();
-               break;
-           case 2:
-               Funcionario.cadastrarFuncionario();
-               break;
-           case 3:
-               System.out.println("Voltando ao menu inicial...");
-               break;
-           default:
-               System.out.println("Opção inválida. Por favor, escolha novamente.");
-       }
-   }
-
-
-   public static void fazerLoginFuncionario() {
-       System.out.println("\n===== Login de Funcionário =====");
-       System.out.print("Senha: ");
-       String senha = Main.scanner.next();
-
-
-       if (senha.equals("UNICAP2024")) {
-           System.out.println("Login de funcionário bem-sucedido!");
-           Funcionario.menuOperacoesFuncionario();
-       } else {
-           System.out.println("Senha incorreta. Tente novamente.");
-       }
-   }
+    }
 }
