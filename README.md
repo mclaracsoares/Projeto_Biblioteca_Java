@@ -24,6 +24,9 @@ Este é um sistema de biblioteca desenvolvido em Java que permite o gerenciament
 - **`Emprestimo`:** Classe que trata das operações de empréstimo e devolução de livros, incluindo a avaliação.
 - **`Utils`:** Classe utilitária para gerar IDs aleatórios.
 
+## Observações
+A senha de login do funcionario é "UNICAP2024".
+
 ## Screenshots
 ### Menu Inicial:
 ![image](https://github.com/mclaracsoares/Projeto_Biblioteca_Java/assets/133005094/a050d7a0-6533-4e6c-ad38-49bbae4e9b11)
